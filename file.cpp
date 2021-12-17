@@ -2,9 +2,7 @@
 #include <fstream>
 
 int main() {
-    FILE *
-
-
+    //Teste
 
     return 0;
 }
