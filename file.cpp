@@ -4,12 +4,14 @@
 using namespace std;
 
 int main() {
-    ifstream inputFile ("input");
-    if(inputFile.is_open()){
-        while(getline(inputFile, line)){
+    string line;
+    int programNumber;
 
-        }
-    }
-
+    while(cin) {
+        getline(cin, line);
+        programNumber = atoi(line);
+        if(programNumber == 1) p1();
+        else p2();
+    };
     return 0;
 }
