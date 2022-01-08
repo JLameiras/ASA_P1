@@ -8,7 +8,6 @@ using namespace std;
 vector<int> stringToVector(string line){
     int i, j = 0;
     vector<int> sequence(1);
-    cout << sequence[0];
     for(i = 0; line[i] != '\0'; i++) {
         if (line[i] == ' ') {j++; sequence.push_back(0);}
         else sequence[j] = 10 * sequence[j] + (line[i] - '0');
@@ -20,37 +19,55 @@ void p1(){
     string line;
     getline(cin, line);
     vector<int> sequence = stringToVector(line);
-    vector<int> lengthByID (sequence.size());
-    vector<int> countByID (sequence.size());
-    for(int i = 0; i < sequence.size(); i++){
-        lengthByID[i] = 0;
-        countByID[i] = 0;
-    }
+    vector<int> lengthByID (sequence.size(), 1);
+    vector<int> countByID (sequence.size(), 1);
     int length = 0;
     int count = 0;
 
-    for(int i = 1; i < sequence.size(); i++){
+    for(int i = 0; i < sequence.size(); i++){
         for(int j = 0; j < i; j++){
-            if(sequence[j] < sequence[i]){
-                if(lengthByID[i] < lengthByID[j] + 1){
-                    lengthByID[i] = lengthByID[j];
-                    countByID[i] = countByID[j];
-                } else if(lengthByID[i] == lengthByID[j] + 1)
-                    countByID[i] = countByID[i] + countByID[j];
+            if(sequence[j] >= sequence[i]) continue;
+            if(lengthByID[i] < lengthByID[j] + 1){
+                lengthByID[i] = lengthByID[j] + 1;
+                countByID[i] = countByID[j];
+            } else if(lengthByID[i] == lengthByID[j] + 1)
+                countByID[i] = countByID[i] + countByID[j];
+        }
+    }
+
+    for(int i : lengthByID) length = max(length, lengthByID[i]);
+
+    for(int i = 0; i < sequence.size(); i++)
+        if (lengthByID[i] == length)
+            count += countByID[i];
+
+    cout << length << ' ' << count;
+}
+
+void p2() {
+    string line;
+    getline(cin, line);
+    vector<int> sequence1 = stringToVector(line);
+    int n = sequence1.size();
+
+    getline(cin, line);
+    vector<int> sequence2 = stringToVector(line);
+    int m = sequence2.size();
+
+    int A [n+1][m+1];
+
+    for(int i = 0; i < n + 1; i++) A[i][0] = 0;
+    for(int j = 0; j < m + 1; j++) A[0][j] = 0;
+
+    for(int k = 1; k <= n; k++){
+        for(int l = 1; l <= m; l++){
+            if(sequence1[k] == sequence2[l]){
+
             }
         }
     }
 
-    for(int id = 0; id < sequence.size(); id++){
-        if(length < lengthByID[id]){
-            length = lengthByID[id];
-            count = id;
-        }
-    }
-    cout<<count<<length;
-}
-
-void p2() {
+    cout << A[n+1][m+1];
 }
 
 int main() {
