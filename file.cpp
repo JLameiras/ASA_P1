@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 vector<int> stringToVector(string line){
     int i, j = 0;
     vector<int> sequence(1);
@@ -14,16 +13,13 @@ vector<int> stringToVector(string line){
         if (line[i] == ' ') {j++; sequence.push_back(0);}
         else sequence[j] = 10 * sequence[j] + (line[i] - '0');
     }
-
     return sequence;
 }
-
 
 void p1(){
     string line;
     getline(cin, line);
-    vector<int> sequence;
-    sequence = stringToVector(line);
+    vector<int> sequence = stringToVector(line);
 
 }
 
