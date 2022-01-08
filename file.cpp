@@ -60,14 +60,13 @@ void p2() {
     for(int j = 0; j < m + 1; j++) A[0][j] = 0;
 
     for(int k = 1; k <= n; k++){
-        for(int l = 1; l <= m; l++){
-            if(sequence1[k] == sequence2[l]){
-
-            }
+        for(int l = 1; l <= m; l++) {
+            if (sequence1[k] == sequence2[l]) A[k][l] = A[k - 1][l - 1] + 1;
+            else if (A[k - 1][l] >= A[k][l - 1]) A[k][l] = A[k - 1][l];
+            else A[k][l] = A[k][l - 1];
         }
     }
-
-    cout << A[n+1][m+1];
+    cout << A[n][m];
 }
 
 int main() {
