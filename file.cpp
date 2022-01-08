@@ -20,7 +20,34 @@ void p1(){
     string line;
     getline(cin, line);
     vector<int> sequence = stringToVector(line);
+    vector<int> lengthByID (sequence.size());
+    vector<int> countByID (sequence.size());
+    for(int i = 0; i < sequence.size(); i++){
+        lengthByID[i] = 0;
+        countByID[i] = 0;
+    }
+    int length = 0;
+    int count = 0;
 
+    for(int i = 1; i < sequence.size(); i++){
+        for(int j = 0; j < i; j++){
+            if(sequence[j] < sequence[i]){
+                if(lengthByID[i] < lengthByID[j] + 1){
+                    lengthByID[i] = lengthByID[j];
+                    countByID[i] = countByID[j];
+                } else if(lengthByID[i] == lengthByID[j] + 1)
+                    countByID[i] = countByID[i] + countByID[j];
+            }
+        }
+    }
+
+    for(int id = 0; id < sequence.size(); id++){
+        if(length < lengthByID[id]){
+            length = lengthByID[id];
+            count = id;
+        }
+    }
+    cout<<count<<length;
 }
 
 void p2() {
@@ -29,7 +56,6 @@ void p2() {
 int main() {
     string line;
     int program;
-
     while(cin) {
         getline(cin, line);
         program = atoi(line.c_str());
