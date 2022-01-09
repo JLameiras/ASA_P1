@@ -5,21 +5,20 @@
 
 using namespace std;
 
-vector<int> stringToVector(string line){
+void stringToVector(string line, vector<int>* sequence){
     int i, j = 0;
-    vector<int> sequence(1);
+
     for(i = 0; line[i] != '\0'; i++) {
-        if (line[i] == ' ') {j++; sequence.push_back(0);}
-        else sequence[j] = 10 * sequence[j] + (line[i] - '0');
+        if (line[i] == ' ') {j++; (*sequence).push_back(0);}
+        else (*sequence)[j] = 10 * (*sequence)[j] + (line[i] - '0');
     }
-    return sequence;
 }
 
 void p1(){
     string line;
     getline(cin, line);
-
-    vector<int> sequence = stringToVector(line);
+    vector<int> sequence(1);
+    stringToVector(line, &sequence);
     int sequenceSize = static_cast<int>(sequence.size());
     vector<int> lengthByID (sequence.size(), 1);
     vector<int> countByID (sequence.size(), 1);
@@ -48,13 +47,13 @@ void p1(){
 void p2() {
     string line;
     getline(cin, line);
-    vector<int> sequence1 = stringToVector(line);
+    vector<int> sequence1(1);
+    stringToVector(line, &sequence1);
     int n = static_cast<int>(sequence1.size());
-
     getline(cin, line);
-    vector<int> sequence2 = stringToVector(line);
+    vector<int> sequence2(1);
+    stringToVector(line, &sequence2);
     int m = static_cast<int>(sequence2.size());
-
     vector<int> lookup(m, 0);
 
     for(int i = 0; i < n; i++) {
