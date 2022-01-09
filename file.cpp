@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -24,11 +25,6 @@ void p1(){
     vector<int> countByID (sequence.size(), 1);
     int length = 0;
     int count = 0;
-
-    if(sequenceSize == 0 || sequenceSize == 1){
-        cout << sequenceSize << ' ' << sequenceSize;
-        return;
-    }
 
     for(int i = 0; i < sequenceSize; i++){
         for(int j = 0; j < i; j++){
@@ -59,19 +55,22 @@ void p2() {
     vector<int> sequence2 = stringToVector(line);
     int m = static_cast<int>(sequence2.size());
 
-    int A [n+1][m+1];
+    vector<int> lookup(m, 0);
 
-    for(int i = 0; i < n + 1; i++) A[i][0] = 0;
-    for(int j = 0; j < m + 1; j++) A[0][j] = 0;
+    for(int i = 0; i < n; i++) {
+        int currentLength = 0; // Length of longest common increasing sequence
 
-    for(int k = 1; k <= n; k++){
-        for(int l = 1; l <= m; l++) {
-            if (sequence1[k] == sequence2[l]) A[k][l] = A[k - 1][l - 1] + 1;
-            else if (A[k - 1][l] >= A[k][l - 1]) A[k][l] = A[k - 1][l];
-            else A[k][l] = A[k][l - 1];
+        for(int j = 0; j < m; j++) {
+            if(sequence1[i] == sequence2[j])
+                if(currentLength + 1 > lookup[j])
+                    lookup[j] = currentLength + 1;
+            if(sequence1[i] > sequence2[j])
+                if(lookup[j] > currentLength)
+                    currentLength = lookup[j];
         }
     }
-    cout << A[n][m] << endl;
+
+    cout << *max_element(lookup.begin(), lookup.end()) << endl;
 }
 
 int main() {
