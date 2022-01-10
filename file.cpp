@@ -6,22 +6,37 @@
 using namespace std;
 
 void stringToVector(string line, vector<int>* sequence){
-    int i, j = 0;
+    int i, j;
 
-    for(i = 0; line[i] != '\0'; i++) {
+    for(i = 0, j = 0; line[i] != '\0'; i++) {
+        if (line[i] == ' ') {j++; (*sequence).push_back(0);}
+        else (*sequence)[j] = 10 * (*sequence)[j] + (line[i] - '0');
+    }
+}
+/*
+void stringToHashTable(string line, vector<int>* sequence){
+    int i, j;
+
+    for(i = 0, j = 0; line[i] != '\0'; i++) {
         if (line[i] == ' ') {j++; (*sequence).push_back(0);}
         else (*sequence)[j] = 10 * (*sequence)[j] + (line[i] - '0');
     }
 }
 
+void removeElementsNotShared(string line, vector<int>* sequence){
+    int i, j;
+}
+*/
 void p1(){
     string line;
     getline(cin, line);
     vector<int> sequence(1);
     stringToVector(line, &sequence);
+
     int sequenceSize = static_cast<int>(sequence.size());
-    vector<int> lengthByID (sequence.size(), 1);
-    vector<int> countByID (sequence.size(), 1);
+    vector<int> lengthByID (sequenceSize, 1);
+    vector<int> countByID (sequenceSize, 1);
+
     int length = 0;
     int count = 0;
 
@@ -47,19 +62,21 @@ void p1(){
 void p2() {
     string line;
     getline(cin, line);
+
     vector<int> sequence1(1);
     stringToVector(line, &sequence1);
-    int n = static_cast<int>(sequence1.size());
+    int m = static_cast<int>(sequence1.size());
+
     getline(cin, line);
     vector<int> sequence2(1);
     stringToVector(line, &sequence2);
-    int m = static_cast<int>(sequence2.size());
-    vector<int> lookup(m, 0);
+    int n = static_cast<int>(sequence2.size());
+    vector<int> lookup(n, 0);
 
-    for(int i = 0; i < n; i++) {
-        int currentLength = 0; // Length of longest common increasing sequence
+    for(int i = 0; i < m; i++) {
+        int currentLength = 0;
 
-        for(int j = 0; j < m; j++) {
+        for(int j = 0; j < n; j++) {
             if(sequence1[i] == sequence2[j])
                 if(currentLength + 1 > lookup[j])
                     lookup[j] = currentLength + 1;
