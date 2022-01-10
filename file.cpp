@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -61,16 +62,24 @@ void p1(){
 
 void p2() {
     string line;
+    //Obtain first sequence
     getline(cin, line);
-
     vector<int> sequence1(1);
     stringToVector(line, &sequence1);
     int m = static_cast<int>(sequence1.size());
-
+    //Obtain second sequence
     getline(cin, line);
     vector<int> sequence2(1);
     stringToVector(line, &sequence2);
     int n = static_cast<int>(sequence2.size());
+    set<int> values(sequence1.begin(), sequence1.end());
+    //Optimize second sequence (remove redundant elements)
+    int aux = 0;
+    for(int i = 0; i < n; i++)
+        if(values.find(sequence2[i - aux]) == values.end())
+            sequence2.erase(sequence2.begin() + i - aux++);
+
+    n = static_cast<int>(sequence2.size());
     vector<int> lookup(n, 0);
 
     for(int i = 0; i < m; i++) {
