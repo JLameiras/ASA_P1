@@ -5,6 +5,7 @@
 #include <set>
 
 using namespace std;
+using namespace std::chrono;
 
 void stringToVector(string line, vector<int>* sequence){
     int i, j;
@@ -16,6 +17,7 @@ void stringToVector(string line, vector<int>* sequence){
 }
 
 void p1(){
+    auto start = high_resolution_clock::now();
     string line;
     getline(cin, line);
     vector<int> sequence(1);
@@ -44,10 +46,15 @@ void p1(){
         } else if(length == lengthByID[i])
             count += countByID[i];
     }
+    auto end = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(end - start);
+    cout << "Time taken by p1: "
+         << duration.count() << " microseconds. Sequence size:" << sequenceSize << endl;
     cout << length << ' ' << count << endl;
 }
 
 void p2() {
+    auto start = high_resolution_clock::now();
     string line;
     //Obtain first sequence
     getline(cin, line);
@@ -80,6 +87,10 @@ void p2() {
         }
     }
 
+    auto end = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(end - start);
+    cout << "\nTime taken by p2: "
+         << duration.count() << " microseconds. S1 & S2 size: " << sequence1.size() + sequence2.size() << endl;
     cout << *max_element(lookup.begin(), lookup.end()) << endl;
 }
 
